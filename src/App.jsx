@@ -100,7 +100,6 @@ export default function App() {
 
   const [showModalAmount, setShowModalAmount] = useState(false);
   const [total, setTotal] = useState(0);
-  const [historyStack, setHistoryStack] = useState([]);
   const [stack, setStack] = useState({
     myr1: 0,
     myr5: 0,
@@ -109,13 +108,6 @@ export default function App() {
     myr50: 0,
     myr100: 0,
   });
-
-  const playUndoSound = () => {
-    if (undoSoundRef.current) {
-      undoSoundRef.current.currentTime = 0; // Reset the audio to the start
-      undoSoundRef.current.play(); // Play the audio
-    }
-  };
 
   const playSwishSound = () => {
     if (swishSoundRef.current) {
@@ -140,7 +132,6 @@ export default function App() {
 
   const clearDesk = () => {
     playSwishSound();
-    setHistoryStack([]);
     setStack({
       myr1: 0,
       myr5: 0,
@@ -167,20 +158,20 @@ export default function App() {
     });
   };
 
-  const undo = () => {
-    playUndoSound();
-    if (historyStack.length > 0) {
-      const prevHistory = [...historyStack];
-      const lastState = prevHistory.pop();
-      setHistoryStack(prevHistory);
-      setStack(lastState);
-    }
-  };
-
   const shuffle = () => {
     if (total <= 0) return;
-    let stack = randomizeBreakdown(total);
-    setStack(stack);
+    let newStack = randomizeBreakdown(total);
+
+    let str1 = JSON.stringify(newStack);
+    let str2 = JSON.stringify(stack);
+
+    // jaminan supaya hasil shuffle tak sama dengan yang sebelumnya
+    while (str1 === str2) {
+      newStack = randomizeBreakdown(total);
+      str1 = JSON.stringify(newStack);
+    }
+
+    setStack(newStack);
   };
 
   const paparAmaun = (e) => {
@@ -193,7 +184,6 @@ export default function App() {
 
   useEffect(() => {
     setTotal(calculate(stack));
-    setHistoryStack((prevHistory) => [...prevHistory, stack]);
   }, [stack]);
 
   const denominations = extractDenominationsWithId(stack);
