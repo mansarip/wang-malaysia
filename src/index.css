@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Delius+Unicase:wght@700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  user-select: none;
+}
+
+.jahit {
+  background-image: url(jahit.png);
+  height: 25px;
+  width: 100%;
+  background-size: contain;
+}
+
+.delius-unicase-bold {
+  font-family: "Delius Unicase", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+
+button.action {
+  background-size: cover;
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  z-index: 10;
+  border: none;
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: transform 0.05s ease;
+}
+
+button.undo {
+  background-image: url(undo.png);
+  bottom: 50px;
+  left: 25px;
+}
+
+button.random {
+  background-image: url(dice.png);
+  bottom: 50px;
+  left: 25px;
+}
+
+button.clear {
+  background-image: url(clean.png);
+  bottom: 50px;
+  right: 25px;
+}
+
+button.action:active {
+  transform: scale(1);
+}
+
+.button-duit {
+  transform: scale(1);
+  transition: transform 0.05s ease;
+}
+.button-duit:active {
+  transform: scale(0.95);
+}
+
+.plane {
+  width: 45%;
+  height: 54%;
+  position: absolute;
+  /* background: red; */
+  transform: skewY(-19deg) skewX(37deg) rotate(76deg);
+  top: 11%;
+}
+
+.plane .rm {
+  box-shadow: 2px 2px 3px #1e1e1e;
+  position: absolute;
+  background-repeat: no-repeat;
+}
+
+.rm.rm1 {
+  width: 45%;
+  height: 18%;
+  background-image: url(myr1_small.png);
+  background-size: contain;
+  border: 1px solid #3d60ca;
+}
+
+.rm.rm5 {
+  width: 47%;
+  height: 19%;
+  background-image: url(myr5_small.png);
+  background-size: contain;
+  border: 1px solid #57791d;
+}
+
+.rm.rm10 {
+  width: 49%;
+  height: 19%;
+  background-image: url(myr10_small.png);
+  background-size: contain;
+  border: 1px solid #791d1d;
+}
+
+.rm.rm20 {
+  width: 49%;
+  height: 19%;
+  background-image: url(myr20_small.png);
+  background-size: contain;
+  border: 1px solid #bc8f1e;
+}
+
+.rm.rm50 {
+  width: 51.5%;
+  height: 20%;
+  background-image: url(myr50_small.png);
+  background-size: contain;
+  border: 1px solid #1e9fbc;
+}
+
+.rm.rm100 {
+  width: 53%;
+  height: 20%;
+  background-image: url(myr100_small.png);
+  background-size: contain;
+  border: 1px solid #701ebc;
+}
+
+img {
+  -webkit-touch-callout: none; /* Halang menu konteks pada iOS */
+  -webkit-user-select: none; /* Halang teks dipilih pada iOS */
+  -webkit-tap-highlight-color: transparent; /* Hilangkan highlight */
+  user-select: none; /* Halang teks dipilih */
+  pointer-events: none; /* Halang interaksi dengan imej */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
