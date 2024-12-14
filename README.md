@@ -30,9 +30,6 @@
 
    - Boleh install terus jadi app dalam phone.
 
-1. **Next Perancangan**
-   - Tambah duit syiling atas meja.
-
 ## Akses
 
 Boleh guna terus melalui [https://wang.mansarip.org](https://wang.mansarip.org)
@@ -54,3 +51,9 @@ bun run dev
 ```
 
 Jika ada apa-apa penambahan, boleh submit PR, terima kasih!
+
+# Todo
+
+- Tambah duit syiling atas meja
+- ~~Handle duit yang banyak (berjuta) - sebab dia crash bila banyak sangat component rendered~~
+- Handle long press

@@ -119,9 +119,7 @@ export default function App() {
     setStack(newStack);
   };
 
-  const paparAmaun = (e) => {
-    e.preventDefault();
-    let value = Number(e.target.amount.value);
+  const paparAmaun = (value) => {
     let stack = randomizeBreakdown(value);
     setStack(stack);
     setShowModalAmount(false);

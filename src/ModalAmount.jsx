@@ -1,4 +1,17 @@
 export default function ModalAmount({ close, submit }) {
+  const preSubmit = (e) => {
+    e.preventDefault();
+    let n = Number(e.target.amount.value);
+    if (isNaN(n)) return;
+    if (n > 10000) {
+      alert(
+        "Kami belum boleh kendali amaun yang besar. Nanti crash. Harap maaf"
+      );
+      return;
+    }
+    submit(n);
+  };
+
   return (
     <div
       className="absolute z-20 top-0 left-0 right-0 bottom-0 flex pt-20 justify-center bg-black bg-opacity-10"
@@ -12,7 +25,7 @@ export default function ModalAmount({ close, submit }) {
       >
         <div className="text-lg">MASUKKAN AMAUN (RM)</div>
         <div className="text-sm text-gray-500">Enter amount</div>
-        <form className="mt-3 px-10" onSubmit={submit}>
+        <form className="mt-3 px-10" onSubmit={preSubmit}>
           <input
             type="number"
             min={0}
