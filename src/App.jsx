@@ -14,102 +14,13 @@ import myr100 from "./assets/myr100_small.png";
 import iconShuffle from "./assets/dice.png";
 import jahitPattern from "./assets/jahit.png";
 import iconClear from "./assets/clean.png";
-
-function Pill({ type, unit = 1 }) {
-  const types = {
-    1: { text: "RM1", color: "text-sky-800", subColor: "text-sky-700" },
-    5: { text: "RM5", color: "text-green-800", subColor: "text-green-700" },
-    10: { text: "RM10", color: "text-red-800", subColor: "text-red-700" },
-    20: { text: "RM20", color: "text-yellow-800", subColor: "text-yellow-700" },
-    50: { text: "RM50", color: "text-teal-800", subColor: "text-teal-700" },
-    100: {
-      text: "RM100",
-      color: "text-purple-800",
-      subColor: "text-purple-700",
-    },
-  };
-
-  const pillType = types[type];
-
-  if (!pillType) return null;
-  if (!unit) return null;
-
-  return (
-    <div className={`flex items-center gap-0 ${pillType.color}`}>
-      (<span>{pillType.text}</span>
-      <span className={`${pillType.subColor} rounded-full`}>×{unit}</span>)
-    </div>
-  );
-}
-
-function ButtonAdd({ type, onClick }) {
-  const types = {
-    1: {
-      text: "RM1",
-      bgColor: "bg-sky-800",
-      borderColor: "border-sky-900",
-      image: myr1,
-    },
-    5: {
-      text: "RM5",
-      bgColor: "bg-green-800",
-      borderColor: "border-green-900",
-      image: myr5,
-    },
-    10: {
-      text: "RM10",
-      bgColor: "bg-red-800",
-      borderColor: "border-red-900",
-      image: myr10,
-    },
-    20: {
-      text: "RM20",
-      bgColor: "bg-yellow-800",
-      borderColor: "border-yellow-900",
-      image: myr20,
-    },
-    50: {
-      text: "RM50",
-      bgColor: "bg-teal-800",
-      borderColor: "border-teal-900",
-      image: myr50,
-    },
-    100: {
-      text: "RM100",
-      bgColor: "bg-purple-800",
-      borderColor: "border-purple-900",
-      image: myr100,
-    },
-  };
-
-  const buttonType = types[type];
-
-  if (!buttonType) return null;
-
-  return (
-    <div
-      className="min-w-[100px] h-[90px] flex flex-col items-center justify-center p-2 button-duit transform scale-100 transition-transform duration-[50ms] ease-in-out active:scale-95"
-      onClick={onClick}
-    >
-      <img
-        src={buttonType.image}
-        className={`shadow-lg border-2 ${buttonType.borderColor}`}
-      />
-      <div
-        className={`${buttonType.bgColor} ${buttonType.borderColor} border-2 text-white text-md delius-unicase-bold px-2 py-1 rounded-b-lg border-t-0`}
-      >
-        RM {type}
-      </div>
-    </div>
-  );
-}
-
-function extractDenominationsWithId(obj) {
-  return Object.keys(obj).map((key) => ({
-    id: key,
-    n: parseInt(key.replace("myr", ""), 10),
-  }));
-}
+import Pill from "./Pill";
+import ButtonAdd from "./ButtoAdd";
+import {
+  calculate,
+  extractDenominationsWithId,
+  randomizeBreakdown,
+} from "./utils";
 
 export default function App() {
   const undoSoundRef = useRef(null);
@@ -267,7 +178,7 @@ export default function App() {
           </button>
 
           <div className="flex-1 delius-unicase-bold text-4xl text-center flex justify-center items-center flex-col">
-            <div className="text-xs flex flex-wrap mb-2 gap-2 pt-6 px-14 items-center justify-center">
+            <div className="flex flex-wrap mb-2 gap-2 pt-6 px-14 items-center justify-center">
               {denominations.map((d) => (
                 <Pill key={d.id} type={d.n} unit={stack[d.id]} />
               ))}
@@ -282,7 +193,7 @@ export default function App() {
                 <div
                   onClick={() => tolak("myr1")}
                   key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[45%] h-[18%] bg-contain border border-[#3d60ca]"
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[45%] h-[18%] bg-contain border border-[#3d60ca] paper-drop"
                   style={{
                     backgroundImage: `url(${myr1})`,
                     top: `${3 - index * 2.7}%`,
@@ -295,7 +206,7 @@ export default function App() {
                 <div
                   onClick={() => tolak("myr5")}
                   key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[47%] h-[19%] bg-contain border border-[#57791d]"
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[47%] h-[19%] bg-contain border border-[#57791d] paper-drop"
                   style={{
                     backgroundImage: `url(${myr5})`,
                     top: `${3 - index * 2.7}%`,
@@ -308,7 +219,7 @@ export default function App() {
                 <div
                   onClick={() => tolak("myr10")}
                   key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[49%] h-[19%] bg-contain border border-[#791d1d]"
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[49%] h-[19%] bg-contain border border-[#791d1d] paper-drop"
                   style={{
                     backgroundImage: `url(${myr10})`,
                     top: `${30 - index * 2.7}%`,
@@ -321,7 +232,7 @@ export default function App() {
                 <div
                   onClick={() => tolak("myr20")}
                   key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[49%] h-[19%] bg-contain border border-[#bc8f1e]"
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[49%] h-[19%] bg-contain border border-[#bc8f1e] paper-drop"
                   style={{
                     backgroundImage: `url(${myr20})`,
                     top: `${30 - index * 2.7}%`,
@@ -334,7 +245,7 @@ export default function App() {
                 <div
                   onClick={() => tolak("myr50")}
                   key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[51.5%] h-[20%] bg-contain border border-[#1e9fbc]"
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[51.5%] h-[20%] bg-contain border border-[#1e9fbc] paper-drop"
                   style={{
                     backgroundImage: `url(${myr50})`,
                     top: `${55 - index * 2.7}%`,
@@ -347,7 +258,7 @@ export default function App() {
                 <div
                   onClick={() => tolak("myr100")}
                   key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[53%] h-[20%] bg-contain border border-[#701ebc]"
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[53%] h-[20%] bg-contain border border-[#701ebc] paper-drop"
                   style={{
                     backgroundImage: `url(${myr100})`,
                     top: `${55 - index * 2.7}%`,
@@ -402,54 +313,4 @@ export default function App() {
       </div>
     </div>
   );
-}
-
-function calculate(stack) {
-  const denominations = {
-    myr1: 1,
-    myr5: 5,
-    myr10: 10,
-    myr20: 20,
-    myr50: 50,
-    myr100: 100,
-  };
-
-  let amt = Object.keys(stack).reduce((total, key) => {
-    const value = stack[key] || 0;
-    return total + denominations[key] * value;
-  }, 0);
-
-  return amt;
-}
-
-function randomizeBreakdown(amount) {
-  const denominations = [
-    { key: "myr100", value: 100 },
-    { key: "myr50", value: 50 },
-    { key: "myr20", value: 20 },
-    { key: "myr10", value: 10 },
-    { key: "myr5", value: 5 },
-    { key: "myr1", value: 1 },
-  ];
-
-  const result = {
-    myr1: 0,
-    myr5: 0,
-    myr10: 0,
-    myr20: 0,
-    myr50: 0,
-    myr100: 0,
-  };
-
-  // Pastikan loop berterusan selagi amount belum habis
-  while (amount > 0) {
-    const validDenominations = denominations.filter((d) => d.value <= amount); // Pilih denominasi yang masih boleh digunakan
-    const randomIndex = Math.floor(Math.random() * validDenominations.length); // Pilih satu secara rawak
-    const denomination = validDenominations[randomIndex];
-
-    result[denomination.key]++;
-    amount -= denomination.value; // Kurangkan jumlah dengan nilai denominasi
-  }
-
-  return result;
 }

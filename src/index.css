@@ -30,3 +30,22 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+@keyframes paperDrop {
+  0% {
+    transform: translateY(-100px) rotate(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(10px) rotate(5deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.paper-drop {
+  animation: paperDrop 0.2s ease-out forwards;
+}
