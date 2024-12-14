@@ -21,6 +21,8 @@ import {
   extractDenominationsWithId,
   randomizeBreakdown,
 } from "./utils";
+import ModalAmount from "./ModalAmount";
+import ModalAbout from "./ModalAbout";
 
 export default function App() {
   const undoSoundRef = useRef(null);
@@ -29,6 +31,7 @@ export default function App() {
   const shuffleSoundRef = useRef(null);
 
   const [showModalAmount, setShowModalAmount] = useState(false);
+  const [showModalAbout, setShowModalAbout] = useState(false);
   const [total, setTotal] = useState(0);
   const [stack, setStack] = useState({
     myr1: 0,
@@ -137,41 +140,26 @@ export default function App() {
         style={{ background: "#d6c8af" }}
       >
         {showModalAmount && (
-          <div
-            className="absolute z-20 top-0 left-0 right-0 bottom-0 flex pt-20 justify-center bg-black bg-opacity-10"
-            onClick={() => setShowModalAmount(false)}
-          >
-            <div
-              className="bg-white w-[80%] h-[40%] rounded-xl border-4 border-gray-800 shadow-xl delius-unicase-bold flex flex-col items-center justify-center"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <div className="text-lg">MASUKKAN AMAUN (RM)</div>
-              <div className="text-sm text-gray-500">Enter amount</div>
-              <form className="mt-3 px-10" onSubmit={paparAmaun}>
-                <input
-                  type="number"
-                  min={0}
-                  className="outline-none text-center p-1 border-b-2 border-black w-full text-lg"
-                  placeholder="Contoh: 91"
-                  autoFocus
-                  name="amount"
-                />
-                <button
-                  type="submit"
-                  className="mt-1 bg-red-700 text-white w-full p-1"
-                >
-                  Papar
-                </button>
-              </form>
-            </div>
-          </div>
+          <ModalAmount
+            close={() => setShowModalAmount(false)}
+            submit={paparAmaun}
+          />
+        )}
+
+        {showModalAbout && (
+          <ModalAbout close={() => setShowModalAbout(false)} />
         )}
 
         <div className="flex flex-col flex-1 overflow-hidden">
           <button
-            className="absolute top-2 right-2 w-[40px]"
+            className="absolute top-3 left-3 opacity-20"
+            onClick={() => setShowModalAbout(true)}
+          >
+            ℹ️
+          </button>
+
+          <button
+            className="absolute top-3 right-3 w-[40px]"
             onClick={() => setShowModalAmount(true)}
           >
             <img src={iconWriting} />
