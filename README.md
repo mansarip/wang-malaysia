@@ -1,8 +1,56 @@
-# React + Vite
+# Duit Malaysia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Duit Malaysia** adalah satu tool interaktif untuk menggambarkan nilai wang dalam bentuk visual, seperti wang kertas yang disusun atas meja. Projek ini bertujuan untuk membantu pengguna memahami dan memvisualkan nilai wang dengan mudah dan menyeronokkan.
 
-Currently, two official plugins are available:
+(Thanks, GPT 😘)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Ciri-ciri
+
+1. **Visualisasi Wang**
+
+   - Memaparkan nilai wang dalam bentuk visual (wang kertas Malaysia).
+
+1. **Fungsi Shuffle**
+
+   - Nilai wang yang sama tetapi dengan denominasi yang berbeza.
+
+1. **Masukkan Amount**
+
+   - Pengguna boleh masukkan jumlah wang dan ia akan dipaparkan secara visual.
+
+1. **Butang Individu untuk Wang**
+
+   - Butang untuk menambah wang kertas tertentu secara manual.
+
+1. **Fungsi Clear**
+
+   - Untuk mengosongkan visual wang.
+
+1. **PWA**
+
+   - Boleh install terus jadi app dalam phone.
+
+1. **Next Perancangan**
+   - Tambah duit syiling atas meja.
+
+## Akses
+
+Boleh guna terus melalui [https://wang.mansarip.org](https://wang.mansarip.org)
+
+## Development
+
+Dibuat guna React + Vite, with Bun
+
+**Clone**
+```
+git@github.com:mansarip/wang-malaysia.git
+```
+
+**Start dev**
+```
+cd wang-malaysia
+bun i
+bun run dev
+```
+
+Jika ada apa-apa penambahan, boleh submit PR, terima kasih!
