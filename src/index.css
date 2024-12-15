@@ -49,3 +49,22 @@ input[type="number"] {
 .paper-drop {
   animation: paperDrop 0.2s ease-out forwards;
 }
+
+@keyframes coinDrop {
+  0% {
+    transform: perspective(500px) translateZ(-100px) rotateX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: perspective(500px) translateZ(10px) rotateX(5deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: perspective(500px) translateZ(0) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.coin-drop {
+  animation: coinDrop 0.2s ease-out forwards;
+}

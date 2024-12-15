@@ -9,6 +9,7 @@ import undoSound from "./assets/undo.mp3";
 import keypressSound from "./assets/keypress.mp3";
 import swishSound from "./assets/swish.mp3";
 import shuffleSound from "./assets/shuffle.mp3";
+import coinSound from "./assets/coin.mp3";
 import iconWriting from "./assets/writing.png";
 import mejaImage from "./assets/meja.png";
 import myr1 from "./assets/myr1_small.png";
@@ -45,6 +46,7 @@ export default function App() {
   const pressSoundRef = useRef(null);
   const swishSoundRef = useRef(null);
   const shuffleSoundRef = useRef(null);
+  const coinSoundRef = useRef(null);
 
   const [showModalAmount, setShowModalAmount] = useState(false);
   const [showModalAbout, setShowModalAbout] = useState(false);
@@ -72,6 +74,13 @@ export default function App() {
     }
   };
 
+  const playCoinSound = () => {
+    if (coinSoundRef.current) {
+      coinSoundRef.current.currentTime = 0;
+      coinSoundRef.current.play();
+    }
+  };
+
   const formatAmount = (amount) => {
     return new Intl.NumberFormat("ms-MY", {
       minimumFractionDigits: 2,
@@ -84,8 +93,13 @@ export default function App() {
     setStack(defaultStack());
   };
 
-  const tambah = (key) => {
-    playButtonSound();
+  const tambah = (key, isCoin = false) => {
+    if (isCoin) {
+      playCoinSound();
+    } else {
+      playButtonSound();
+    }
+
     setStack({
       ...stack,
       [key]: stack[key] + 1,
@@ -253,6 +267,7 @@ export default function App() {
                 topOffset={82}
                 leftOffset={10}
                 isRounded
+                isCoin
               />
               <MoneyStack
                 type="sen20"
@@ -265,6 +280,7 @@ export default function App() {
                 topOffset={82}
                 leftOffset={33}
                 isRounded
+                isCoin
               />
               <MoneyStack
                 type="sen10"
@@ -277,6 +293,7 @@ export default function App() {
                 topOffset={82}
                 leftOffset={56}
                 isRounded
+                isCoin
               />
               <MoneyStack
                 type="sen5"
@@ -289,6 +306,7 @@ export default function App() {
                 topOffset={82}
                 leftOffset={80}
                 isRounded
+                isCoin
               />
             </div>
 
@@ -324,7 +342,7 @@ export default function App() {
               <ButtonAdd
                 key={item.n}
                 type={item.n}
-                onClick={() => tambah(item.id)}
+                onClick={() => tambah(item.id, item.isCoin)}
               />
             ))}
           </div>
@@ -334,6 +352,7 @@ export default function App() {
         <audio ref={pressSoundRef} src={keypressSound} />
         <audio ref={shuffleSoundRef} src={shuffleSound} />
         <audio ref={swishSoundRef} src={swishSound} />
+        <audio ref={coinSoundRef} src={coinSound} />
       </div>
     </div>
   );
@@ -350,22 +369,26 @@ function MoneyStack({
   topOffset,
   leftOffset,
   isRounded,
+  isCoin = false,
 }) {
-  return Array.from({ length: count }, (_, index) => (
-    <div
-      key={index}
-      onClick={() => onClick(type)}
-      className={`shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat bg-contain paper-drop ${
-        isRounded ? "rounded-full" : ""
-      }`}
-      style={{
-        backgroundImage: `url(${imageUrl})`,
-        width,
-        height,
-        border,
-        top: `${topOffset - index * 2.7}%`,
-        left: `${leftOffset - index * 3}%`,
-      }}
-    />
-  ));
+  return Array.from({ length: count }, (_, index) => {
+    let animation = isCoin ? "coin-drop" : "paper-drop";
+    let radius = isRounded ? "rounded-full" : "";
+
+    return (
+      <div
+        key={index}
+        onClick={() => onClick(type)}
+        className={`shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat bg-contain ${animation} ${radius}`}
+        style={{
+          backgroundImage: `url(${imageUrl})`,
+          width,
+          height,
+          border,
+          top: `${topOffset - index * 2.7}%`,
+          left: `${leftOffset - index * 3}%`,
+        }}
+      />
+    );
+  });
 }

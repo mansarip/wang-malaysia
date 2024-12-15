@@ -26,18 +26,22 @@ export const denominations = [
   {
     id: "sen5",
     n: 0.05,
+    isCoin: true,
   },
   {
     id: "sen10",
     n: 0.1,
+    isCoin: true,
   },
   {
     id: "sen20",
     n: 0.2,
+    isCoin: true,
   },
   {
     id: "sen50",
     n: 0.5,
+    isCoin: true,
   },
 ];
 
