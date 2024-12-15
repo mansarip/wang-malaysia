@@ -1,4 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import Pill from "./Pill";
+import ButtonAdd from "./ButtoAdd";
+import { calculate, denominations, randomizeBreakdown } from "./utils";
+import ModalAmount from "./ModalAmount";
+import ModalAbout from "./ModalAbout";
+
 import undoSound from "./assets/undo.mp3";
 import keypressSound from "./assets/keypress.mp3";
 import swishSound from "./assets/swish.mp3";
@@ -18,11 +24,6 @@ import sen5 from "./assets/5sen.png";
 import iconShuffle from "./assets/dice.png";
 import jahitPattern from "./assets/jahit.png";
 import iconClear from "./assets/clean.png";
-import Pill from "./Pill";
-import ButtonAdd from "./ButtoAdd";
-import { calculate, denominations, randomizeBreakdown } from "./utils";
-import ModalAmount from "./ModalAmount";
-import ModalAbout from "./ModalAbout";
 
 function defaultStack() {
   return {
@@ -173,136 +174,122 @@ export default function App() {
             </span>
           </div>
           <div className="topside flex flex-col flex-1 items-center justify-end relative">
+            {/* hoho */}
             <div className="w-[45%] h-[54%] absolute transform skew-y-[-22deg] skew-x-[-2deg] rotate-[54deg] top-[11%]">
-              {Array.from({ length: stack.myr1 }, (_, index) => (
-                <div
-                  onClick={() => tolak("myr1")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[45%] h-[18%] bg-contain border border-[#3d60ca] paper-drop"
-                  style={{
-                    backgroundImage: `url(${myr1})`,
-                    top: `${3 - index * 2.7}%`,
-                    left: `${2 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.myr5 }, (_, index) => (
-                <div
-                  onClick={() => tolak("myr5")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[47%] h-[19%] bg-contain border border-[#57791d] paper-drop"
-                  style={{
-                    backgroundImage: `url(${myr5})`,
-                    top: `${3 - index * 2.7}%`,
-                    left: `${51 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.myr10 }, (_, index) => (
-                <div
-                  onClick={() => tolak("myr10")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[49%] h-[19%] bg-contain border border-[#791d1d] paper-drop"
-                  style={{
-                    backgroundImage: `url(${myr10})`,
-                    top: `${30 - index * 2.7}%`,
-                    left: `${-1 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.myr20 }, (_, index) => (
-                <div
-                  onClick={() => tolak("myr20")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[49%] h-[19%] bg-contain border border-[#bc8f1e] paper-drop"
-                  style={{
-                    backgroundImage: `url(${myr20})`,
-                    top: `${30 - index * 2.7}%`,
-                    left: `${51 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.myr50 }, (_, index) => (
-                <div
-                  onClick={() => tolak("myr50")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[51.5%] h-[20%] bg-contain border border-[#1e9fbc] paper-drop"
-                  style={{
-                    backgroundImage: `url(${myr50})`,
-                    top: `${55 - index * 2.7}%`,
-                    left: `${-4 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.myr100 }, (_, index) => (
-                <div
-                  onClick={() => tolak("myr100")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[53%] h-[20%] bg-contain border border-[#701ebc] paper-drop"
-                  style={{
-                    backgroundImage: `url(${myr100})`,
-                    top: `${55 - index * 2.7}%`,
-                    left: `${51 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.sen50 }, (_, index) => (
-                <div
-                  onClick={() => tolak("sen50")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[14%] h-[11%] bg-contain border border-[#ca8a04] rounded-full"
-                  style={{
-                    backgroundImage: `url(${sen50})`,
-                    top: `${82 - index * 2.7}%`,
-                    left: `${10 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.sen20 }, (_, index) => (
-                <div
-                  onClick={() => tolak("sen20")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[13%] h-[10%] bg-contain border border-[#ca8a04] rounded-full"
-                  style={{
-                    backgroundImage: `url(${sen20})`,
-                    top: `${82 - index * 2.7}%`,
-                    left: `${33 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.sen10 }, (_, index) => (
-                <div
-                  onClick={() => tolak("sen10")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[12%] h-[9%] bg-contain border border-[#64748b] rounded-full"
-                  style={{
-                    backgroundImage: `url(${sen10})`,
-                    top: `${82 - index * 2.7}%`,
-                    left: `${56 - index * 3}%`,
-                  }}
-                />
-              ))}
-
-              {Array.from({ length: stack.sen5 }, (_, index) => (
-                <div
-                  onClick={() => tolak("sen5")}
-                  key={index}
-                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[10%] h-[8%] bg-contain border border-[#64748b] rounded-full"
-                  style={{
-                    backgroundImage: `url(${sen5})`,
-                    top: `${82 - index * 2.7}%`,
-                    left: `${80 - index * 3}%`,
-                  }}
-                />
-              ))}
+              <MoneyStack
+                type="myr1"
+                count={stack.myr1}
+                onClick={tolak}
+                imageUrl={myr1}
+                width="45%"
+                height="18%"
+                border="1px solid #3d60ca"
+                topOffset={3}
+                leftOffset={2}
+              />
+              <MoneyStack
+                type="myr5"
+                count={stack.myr5}
+                onClick={tolak}
+                imageUrl={myr5}
+                width="47%"
+                height="19%"
+                border="1px solid #57791d"
+                topOffset={3}
+                leftOffset={51}
+              />
+              <MoneyStack
+                type="myr10"
+                count={stack.myr10}
+                onClick={tolak}
+                imageUrl={myr10}
+                width="49%"
+                height="19%"
+                border="1px solid #791d1d"
+                topOffset={30}
+                leftOffset={-1}
+              />
+              <MoneyStack
+                type="myr20"
+                count={stack.myr20}
+                onClick={tolak}
+                imageUrl={myr20}
+                width="49%"
+                height="19%"
+                border="1px solid #bc8f1e"
+                topOffset={30}
+                leftOffset={51}
+              />
+              <MoneyStack
+                type="myr50"
+                count={stack.myr50}
+                onClick={tolak}
+                imageUrl={myr50}
+                width="51.5%"
+                height="20%"
+                border="1px solid #1e9fbc"
+                topOffset={55}
+                leftOffset={-4}
+              />
+              <MoneyStack
+                type="myr100"
+                count={stack.myr100}
+                onClick={tolak}
+                imageUrl={myr100}
+                width="53%"
+                height="20%"
+                border="1px solid #701ebc"
+                topOffset={55}
+                leftOffset={51}
+              />
+              <MoneyStack
+                type="sen50"
+                count={stack.sen50}
+                onClick={tolak}
+                imageUrl={sen50}
+                width="14%"
+                height="11%"
+                border="1px solid #ca8a04"
+                topOffset={82}
+                leftOffset={10}
+                isRounded
+              />
+              <MoneyStack
+                type="sen20"
+                count={stack.sen20}
+                onClick={tolak}
+                imageUrl={sen20}
+                width="13%"
+                height="10%"
+                border="1px solid #ca8a04"
+                topOffset={82}
+                leftOffset={33}
+                isRounded
+              />
+              <MoneyStack
+                type="sen10"
+                count={stack.sen10}
+                onClick={tolak}
+                imageUrl={sen10}
+                width="12%"
+                height="9%"
+                border="1px solid #64748b"
+                topOffset={82}
+                leftOffset={56}
+                isRounded
+              />
+              <MoneyStack
+                type="sen5"
+                count={stack.sen5}
+                onClick={tolak}
+                imageUrl={sen5}
+                width="10%"
+                height="8%"
+                border="1px solid #64748b"
+                topOffset={82}
+                leftOffset={80}
+                isRounded
+              />
             </div>
 
             <img
@@ -350,4 +337,35 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+function MoneyStack({
+  type,
+  count,
+  onClick,
+  imageUrl,
+  width,
+  height,
+  border,
+  topOffset,
+  leftOffset,
+  isRounded,
+}) {
+  return Array.from({ length: count }, (_, index) => (
+    <div
+      key={index}
+      onClick={() => onClick(type)}
+      className={`shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat bg-contain paper-drop ${
+        isRounded ? "rounded-full" : ""
+      }`}
+      style={{
+        backgroundImage: `url(${imageUrl})`,
+        width,
+        height,
+        border,
+        top: `${topOffset - index * 2.7}%`,
+        left: `${leftOffset - index * 3}%`,
+      }}
+    />
+  ));
 }
