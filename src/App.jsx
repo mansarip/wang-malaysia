@@ -164,20 +164,20 @@ export default function App() {
 
         <div className="flex flex-col flex-1 overflow-hidden">
           <button
-            className="absolute top-3 left-3 opacity-50"
+            className="absolute top-3 left-3 opacity-50 z-20"
             onClick={() => setShowModalAbout(true)}
           >
             ℹ️
           </button>
 
           <button
-            className="absolute top-3 right-3 w-[40px]"
+            className="absolute top-3 right-3 w-[40px] z-20"
             onClick={() => setShowModalAmount(true)}
           >
             <img src={iconWriting} />
           </button>
 
-          <div className="flex-1 delius-unicase-bold text-4xl text-center flex justify-center items-center flex-col">
+          <div className="flex-1 delius-unicase-bold text-4xl text-center flex justify-center items-center flex-col z-10">
             <div className="flex flex-wrap mb-2 gap-1 pt-6 px-14 items-center justify-center">
               {denominations.map((d) => (
                 <Pill key={d.id} type={d.n} unit={stack[d.id]} />

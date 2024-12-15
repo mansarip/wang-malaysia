@@ -54,6 +54,8 @@ Jika ada apa-apa penambahan, boleh submit PR, terima kasih!
 
 # Todo
 
-- Tambah duit syiling atas meja
+- ~~Tambah duit syiling atas meja~~
 - ~~Handle duit yang banyak (berjuta) - sebab dia crash bila banyak sangat component rendered~~
 - Handle long press
+- Paparan amaun atas duit
+- Modal ringkasan
