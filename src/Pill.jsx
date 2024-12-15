@@ -1,5 +1,25 @@
 export default function Pill({ type, unit = 1 }) {
   const types = {
+    0.05: {
+      text: "RM0.05",
+      color: "text-slate-800",
+      subColor: "text-slate-700",
+    },
+    0.1: {
+      text: "RM0.10",
+      color: "text-slate-800",
+      subColor: "text-slate-700",
+    },
+    0.2: {
+      text: "RM0.20",
+      color: "text-yellow-800",
+      subColor: "text-yellow-700",
+    },
+    0.5: {
+      text: "RM0.50",
+      color: "text-yellow-800",
+      subColor: "text-yellow-700",
+    },
     1: { text: "RM1", color: "text-sky-800", subColor: "text-sky-700" },
     5: { text: "RM5", color: "text-green-800", subColor: "text-green-700" },
     10: { text: "RM10", color: "text-red-800", subColor: "text-red-700" },

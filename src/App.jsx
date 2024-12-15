@@ -11,18 +11,33 @@ import myr10 from "./assets/myr10_small.png";
 import myr20 from "./assets/myr20_small.png";
 import myr50 from "./assets/myr50_small.png";
 import myr100 from "./assets/myr100_small.png";
+import sen50 from "./assets/50sen.png";
+import sen20 from "./assets/20sen.png";
+import sen10 from "./assets/10sen.png";
+import sen5 from "./assets/5sen.png";
 import iconShuffle from "./assets/dice.png";
 import jahitPattern from "./assets/jahit.png";
 import iconClear from "./assets/clean.png";
 import Pill from "./Pill";
 import ButtonAdd from "./ButtoAdd";
-import {
-  calculate,
-  extractDenominationsWithId,
-  randomizeBreakdown,
-} from "./utils";
+import { calculate, denominations, randomizeBreakdown } from "./utils";
 import ModalAmount from "./ModalAmount";
 import ModalAbout from "./ModalAbout";
+
+function defaultStack() {
+  return {
+    myr1: 0,
+    myr5: 0,
+    myr10: 0,
+    myr20: 0,
+    myr50: 0,
+    myr100: 0,
+    sen50: 0,
+    sen20: 0,
+    sen10: 0,
+    sen5: 0,
+  };
+}
 
 export default function App() {
   const undoSoundRef = useRef(null);
@@ -33,14 +48,7 @@ export default function App() {
   const [showModalAmount, setShowModalAmount] = useState(false);
   const [showModalAbout, setShowModalAbout] = useState(false);
   const [total, setTotal] = useState(0);
-  const [stack, setStack] = useState({
-    myr1: 0,
-    myr5: 0,
-    myr10: 0,
-    myr20: 0,
-    myr50: 0,
-    myr100: 0,
-  });
+  const [stack, setStack] = useState(defaultStack());
 
   const playSwishSound = () => {
     if (swishSoundRef.current) {
@@ -72,14 +80,7 @@ export default function App() {
 
   const clearDesk = () => {
     playSwishSound();
-    setStack({
-      myr1: 0,
-      myr5: 0,
-      myr10: 0,
-      myr20: 0,
-      myr50: 0,
-      myr100: 0,
-    });
+    setStack(defaultStack());
   };
 
   const tambah = (key) => {
@@ -129,8 +130,6 @@ export default function App() {
     setTotal(calculate(stack));
   }, [stack]);
 
-  const denominations = extractDenominationsWithId(stack);
-
   return (
     <div className="flex items-center justify-center md:mt-10">
       <div
@@ -150,7 +149,7 @@ export default function App() {
 
         <div className="flex flex-col flex-1 overflow-hidden">
           <button
-            className="absolute top-3 left-3 opacity-20"
+            className="absolute top-3 left-3 opacity-50"
             onClick={() => setShowModalAbout(true)}
           >
             ℹ️
@@ -164,7 +163,7 @@ export default function App() {
           </button>
 
           <div className="flex-1 delius-unicase-bold text-4xl text-center flex justify-center items-center flex-col">
-            <div className="flex flex-wrap mb-2 gap-2 pt-6 px-14 items-center justify-center">
+            <div className="flex flex-wrap mb-2 gap-1 pt-6 px-14 items-center justify-center">
               {denominations.map((d) => (
                 <Pill key={d.id} type={d.n} unit={stack[d.id]} />
               ))}
@@ -249,6 +248,58 @@ export default function App() {
                     backgroundImage: `url(${myr100})`,
                     top: `${55 - index * 2.7}%`,
                     left: `${51 - index * 3}%`,
+                  }}
+                />
+              ))}
+
+              {Array.from({ length: stack.sen50 }, (_, index) => (
+                <div
+                  onClick={() => tolak("sen50")}
+                  key={index}
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[14%] h-[11%] bg-contain border border-[#ca8a04] rounded-full"
+                  style={{
+                    backgroundImage: `url(${sen50})`,
+                    top: `${82 - index * 2.7}%`,
+                    left: `${10 - index * 3}%`,
+                  }}
+                />
+              ))}
+
+              {Array.from({ length: stack.sen20 }, (_, index) => (
+                <div
+                  onClick={() => tolak("sen20")}
+                  key={index}
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[13%] h-[10%] bg-contain border border-[#ca8a04] rounded-full"
+                  style={{
+                    backgroundImage: `url(${sen20})`,
+                    top: `${82 - index * 2.7}%`,
+                    left: `${33 - index * 3}%`,
+                  }}
+                />
+              ))}
+
+              {Array.from({ length: stack.sen10 }, (_, index) => (
+                <div
+                  onClick={() => tolak("sen10")}
+                  key={index}
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[12%] h-[9%] bg-contain border border-[#64748b] rounded-full"
+                  style={{
+                    backgroundImage: `url(${sen10})`,
+                    top: `${82 - index * 2.7}%`,
+                    left: `${56 - index * 3}%`,
+                  }}
+                />
+              ))}
+
+              {Array.from({ length: stack.sen5 }, (_, index) => (
+                <div
+                  onClick={() => tolak("sen5")}
+                  key={index}
+                  className="shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat w-[10%] h-[8%] bg-contain border border-[#64748b] rounded-full"
+                  style={{
+                    backgroundImage: `url(${sen5})`,
+                    top: `${82 - index * 2.7}%`,
+                    left: `${80 - index * 3}%`,
                   }}
                 />
               ))}
