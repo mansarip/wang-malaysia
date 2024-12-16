@@ -121,3 +121,10 @@ export function randomizeBreakdown(amount) {
 
   return result;
 }
+
+export function formatCurrency(amount, decimal = false) {
+  return new Intl.NumberFormat("ms-MY", {
+    minimumFractionDigits: decimal ? 2 : 0,
+    maximumFractionDigits: decimal ? 2 : 0,
+  }).format(amount);
+}

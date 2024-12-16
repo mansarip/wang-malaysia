@@ -14,7 +14,7 @@ export default function ModalAmount({ close, submit }) {
 
   return (
     <div
-      className="absolute z-20 top-0 left-0 right-0 bottom-0 flex pt-20 justify-center bg-black bg-opacity-10"
+      className="absolute z-40 top-0 left-0 right-0 bottom-0 flex pt-20 justify-center bg-black bg-opacity-10"
       onClick={close}
     >
       <div

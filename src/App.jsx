@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Pill from "./Pill";
 import ButtonAdd from "./ButtoAdd";
-import { calculate, denominations, randomizeBreakdown } from "./utils";
+import {
+  calculate,
+  denominations,
+  formatCurrency,
+  randomizeBreakdown,
+} from "./utils";
 import ModalAmount from "./ModalAmount";
 import ModalAbout from "./ModalAbout";
 
@@ -25,6 +29,7 @@ import sen5 from "./assets/5sen.png";
 import iconShuffle from "./assets/dice.png";
 import jahitPattern from "./assets/jahit.png";
 import iconClear from "./assets/clean.png";
+import ModalSummary from "./ModalSummary";
 
 function defaultStack() {
   return {
@@ -50,6 +55,7 @@ export default function App() {
 
   const [showModalAmount, setShowModalAmount] = useState(false);
   const [showModalAbout, setShowModalAbout] = useState(false);
+  const [showModalSummary, setShowModalSummary] = useState(false);
   const [total, setTotal] = useState(0);
   const [stack, setStack] = useState(defaultStack());
 
@@ -79,13 +85,6 @@ export default function App() {
       coinSoundRef.current.currentTime = 0;
       coinSoundRef.current.play();
     }
-  };
-
-  const formatAmount = (amount) => {
-    return new Intl.NumberFormat("ms-MY", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
   };
 
   const clearDesk = () => {
@@ -162,6 +161,15 @@ export default function App() {
           <ModalAbout close={() => setShowModalAbout(false)} />
         )}
 
+        {showModalSummary && (
+          <ModalSummary
+            close={() => setShowModalSummary(false)}
+            stack={stack}
+            denominations={denominations}
+            total={total}
+          />
+        )}
+
         <div className="flex flex-col flex-1 overflow-hidden">
           <button
             className="absolute top-3 left-3 opacity-50 z-20"
@@ -178,14 +186,17 @@ export default function App() {
           </button>
 
           <div className="flex-1 delius-unicase-bold text-4xl text-center flex justify-center items-center flex-col z-10">
-            <div className="flex flex-wrap mb-2 gap-1 pt-6 px-14 items-center justify-center">
-              {denominations.map((d) => (
-                <Pill key={d.id} type={d.n} unit={stack[d.id]} />
-              ))}
-            </div>
             <span className="select-none tracking-tight">
-              RM {formatAmount(total)}
+              RM {formatCurrency(total, true)}
             </span>
+            {total > 0 && (
+              <button
+                onClick={() => setShowModalSummary(true)}
+                className="bg-orange-50 text-xs rounded-full px-2 mt-2 text-amber-900"
+              >
+                RINGKASAN
+              </button>
+            )}
           </div>
           <div className="topside flex flex-col flex-1 items-center justify-end relative">
             {/* hoho */}
@@ -322,17 +333,19 @@ export default function App() {
             ></div>
 
             {total > 0 && (
-              <button
-                onClick={shuffle}
-                className="bg-cover h-[13%] w-[13%] absolute z-[10] border-none cursor-pointer transform scale-[1] active:scale-[1.2] active:rotate-[270deg] transition-transform duration-[200ms] ease-in-out bottom-[50px] left-[25px]"
-              >
-                <img src={iconShuffle} />
-              </button>
+              <>
+                <button
+                  onClick={shuffle}
+                  className="h-[13%] w-[13%] absolute z-[10] border-none cursor-pointer transform scale-[1] active:scale-[1.2] active:rotate-[270deg] transition-transform duration-[200ms] ease-in-out bottom-[50px] left-[25px]"
+                >
+                  <img src={iconShuffle} />
+                </button>
+              </>
             )}
 
             <button
               onClick={clearDesk}
-              className="bg-cover h-[13%] w-[13%] absolute z-[10] border-none cursor-pointer transform scale-[1] active:right-[20px] transition-transform duration-[200ms] ease-in-out bottom-[50px] right-[25px]"
+              className="h-[13%] w-[13%] absolute z-[10] border-none cursor-pointer transform scale-[1] active:right-[20px] transition-transform duration-[200ms] ease-in-out bottom-[50px] right-[25px]"
             >
               <img src={iconClear} />
             </button>
@@ -385,8 +398,8 @@ function MoneyStack({
           width,
           height,
           border,
-          top: `${topOffset - index * 2.7}%`,
-          left: `${leftOffset - index * 3}%`,
+          top: `${topOffset - index * 2.2}%`,
+          left: `${leftOffset - index * 2.5}%`,
         }}
       />
     );
