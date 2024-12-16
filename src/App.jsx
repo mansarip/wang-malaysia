@@ -144,6 +144,14 @@ export default function App() {
     setTotal(calculate(stack));
   }, [stack]);
 
+  useEffect(() => {
+    if (showModalSummary) {
+      playShuffleSound();
+    } else {
+      playSwishSound();
+    }
+  }, [showModalSummary]);
+
   return (
     <div className="flex items-center justify-center md:mt-10">
       <div
