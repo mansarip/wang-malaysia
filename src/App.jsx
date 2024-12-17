@@ -137,20 +137,23 @@ export default function App() {
   const paparAmaun = (value) => {
     let stack = randomizeBreakdown(value);
     setStack(stack);
+    playButtonSound();
     setShowModalAmount(false);
+  };
+
+  const openModalSummary = () => {
+    setShowModalSummary(true);
+    playShuffleSound();
+  };
+
+  const closeModalSummary = () => {
+    setShowModalSummary(false);
+    playSwishSound();
   };
 
   useEffect(() => {
     setTotal(calculate(stack));
   }, [stack]);
-
-  useEffect(() => {
-    if (showModalSummary) {
-      playShuffleSound();
-    } else {
-      playSwishSound();
-    }
-  }, [showModalSummary]);
 
   return (
     <div className="flex items-center justify-center md:mt-10">
