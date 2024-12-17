@@ -31,6 +31,8 @@ import jahitPattern from "./assets/jahit.png";
 import iconClear from "./assets/clean.png";
 import ModalSummary from "./ModalSummary";
 
+const LS_KEY_STORE = "stack";
+
 function defaultStack() {
   return {
     myr1: 0,
@@ -46,6 +48,19 @@ function defaultStack() {
   };
 }
 
+function loadStack() {
+  const saved = localStorage.getItem(LS_KEY_STORE);
+  try {
+    if (!saved) {
+      return defaultStack();
+    }
+
+    return JSON.parse(saved);
+  } catch (err) {
+    return defaultStack();
+  }
+}
+
 export default function App() {
   const undoSoundRef = useRef(null);
   const pressSoundRef = useRef(null);
@@ -57,7 +72,7 @@ export default function App() {
   const [showModalAbout, setShowModalAbout] = useState(false);
   const [showModalSummary, setShowModalSummary] = useState(false);
   const [total, setTotal] = useState(0);
-  const [stack, setStack] = useState(defaultStack());
+  const [stack, setStack] = useState(loadStack());
 
   const playSwishSound = () => {
     if (swishSoundRef.current) {
@@ -153,6 +168,7 @@ export default function App() {
 
   useEffect(() => {
     setTotal(calculate(stack));
+    localStorage.setItem(LS_KEY_STORE, JSON.stringify(stack));
   }, [stack]);
 
   return (
@@ -174,7 +190,7 @@ export default function App() {
 
         {showModalSummary && (
           <ModalSummary
-            close={() => setShowModalSummary(false)}
+            close={closeModalSummary}
             stack={stack}
             denominations={denominations}
             total={total}
@@ -183,7 +199,7 @@ export default function App() {
 
         <div className="flex flex-col flex-1 overflow-hidden">
           <button
-            className="absolute top-3 left-3 opacity-50 z-20"
+            className="absolute top-3 left-3 z-20"
             onClick={() => setShowModalAbout(true)}
           >
             ℹ️
@@ -202,7 +218,7 @@ export default function App() {
             </span>
             {total > 0 && (
               <button
-                onClick={() => setShowModalSummary(true)}
+                onClick={openModalSummary}
                 className="bg-orange-50 text-xs rounded-full px-2 mt-2 text-amber-900"
               >
                 RINGKASAN
@@ -210,7 +226,6 @@ export default function App() {
             )}
           </div>
           <div className="topside flex flex-col flex-1 items-center justify-end relative">
-            {/* hoho */}
             <div className="w-[45%] h-[54%] absolute transform skew-y-[-22deg] skew-x-[-2deg] rotate-[54deg] top-[11%]">
               <MoneyStack
                 type="myr1"
