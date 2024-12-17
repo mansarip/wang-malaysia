@@ -13,7 +13,9 @@ export default defineConfig({
       includeAssets: ["**/*"],
       manifest: {
         short_name: "Wang",
-        name: "Wang Malaysia",
+        name: "Visual Wang Malaysia",
+        description:
+          "Alat interaktif untuk memvisualkan amaun wang dengan grafik wang kertas dan syiling Malaysia.",
         icons: [
           {
             src: "icon192.png",
