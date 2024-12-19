@@ -83,7 +83,7 @@ export default function ButtonAdd({ type, onClick }) {
 
   return (
     <div
-      className={`min-w-[100px] h-[90px] flex flex-col items-center justify-center p-2 button-duit transform scale-100 transition-transform duration-[50ms] ease-in-out active:scale-95`}
+      className={`min-w-[100px] h-[90px] flex flex-col items-center justify-center p-2 button-duit transform scale-100 transition-transform duration-[50ms] ease-in-out active:scale-95 cursor-pointer`}
       onClick={onClick}
     >
       {buttonType.isSyiling ? (

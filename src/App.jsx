@@ -8,6 +8,8 @@ import {
 } from "./utils";
 import ModalAmount from "./ModalAmount";
 import ModalAbout from "./ModalAbout";
+import ModalSummary from "./ModalSummary";
+import MoneyStack from "./MoneyStack";
 
 import undoSound from "./assets/undo.mp3";
 import keypressSound from "./assets/keypress.mp3";
@@ -29,7 +31,6 @@ import sen5 from "./assets/5sen.png";
 import iconShuffle from "./assets/dice.png";
 import jahitPattern from "./assets/jahit.png";
 import iconClear from "./assets/clean.png";
-import ModalSummary from "./ModalSummary";
 
 const LS_KEY_STORE = "stack";
 
@@ -57,6 +58,7 @@ function loadStack() {
 
     return JSON.parse(saved);
   } catch (err) {
+    console.error(err?.message);
     return defaultStack();
   }
 }
@@ -172,9 +174,9 @@ export default function App() {
   }, [stack]);
 
   return (
-    <div className="flex items-center justify-center md:mt-10">
+    <div className="flex md:flex-col items-center justify-center md:h-dvh md:bg-gradient-to-b md:from-[#d6c8af] md:to-[#f7e9d0]">
       <div
-        className="h-svh flex flex-col md:w-[400px] md:h-[750px] overflow-hidden md:rounded-xl relative"
+        className="h-svh flex flex-col md:w-[400px] md:h-[750px] overflow-hidden md:rounded-xl md:border md:border-[#574d3b] md:shadow-2xl relative"
         style={{ background: "#d6c8af" }}
       >
         {showModalAmount && (
@@ -376,7 +378,7 @@ export default function App() {
               <img src={iconClear} />
             </button>
           </div>
-          <div className="flex gap-4 overflow-x-scroll p-3 pb-6 bg-[#8c573c]">
+          <div className="flex gap-4 overflow-x-scroll p-3 pb-6 bg-[#8c573c] md:scrollbar md:scrollbar-thumb-[#d6c8af] md:scrollbar-track-[#74452e]">
             {denominations.map((item) => (
               <ButtonAdd
                 key={item.n}
@@ -393,41 +395,43 @@ export default function App() {
         <audio ref={swishSoundRef} src={swishSound} />
         <audio ref={coinSoundRef} src={coinSound} />
       </div>
+
+      <div className="hidden md:block mt-10 scale-[0.9] opacity-80 max-w-[700px]">
+        <div className="guide flex gap-3 items-center">
+          <div className="flex items-center justify-center gap-2 bg-white bg-opacity-20 p-2 rounded-lg">
+            <img src={iconShuffle} className="w-[30px]" />
+            <span className="text-xs text-amber-950">Rombak visual</span>
+          </div>
+
+          <div className="flex items-center justify-center gap-2 bg-white bg-opacity-20 p-2 rounded-lg">
+            <img src={iconClear} className="w-[30px]" />
+            <span className="text-xs text-amber-950">Padam semula</span>
+          </div>
+
+          <div className="flex items-center justify-center gap-2 bg-white bg-opacity-20 p-2 rounded-lg">
+            <img src={iconWriting} className="w-[30px]" />
+            <span className="text-xs text-amber-950">Amaun sendiri</span>
+          </div>
+        </div>
+        <div className="text-center text-xs mt-3 opacity-80">
+          Oleh Man Sarip - Telegram:
+          <a
+            href="https://t.me/mansarip"
+            target="_blank"
+            className="text-red-900"
+          >
+            @mansarip
+          </a>{" "}
+          -{" "}
+          <a
+            href="https://github.com/mansarip/wang-malaysia"
+            target="_blank"
+            className="text-red-900"
+          >
+            Github
+          </a>
+        </div>
+      </div>
     </div>
   );
-}
-
-function MoneyStack({
-  type,
-  count,
-  onClick,
-  imageUrl,
-  width,
-  height,
-  border,
-  topOffset,
-  leftOffset,
-  isRounded,
-  isCoin = false,
-}) {
-  return Array.from({ length: count }, (_, index) => {
-    let animation = isCoin ? "coin-drop" : "paper-drop";
-    let radius = isRounded ? "rounded-full" : "";
-
-    return (
-      <div
-        key={index}
-        onClick={() => onClick(type)}
-        className={`shadow-[2px_2px_3px_#1e1e1e] absolute bg-no-repeat bg-contain ${animation} ${radius}`}
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-          width,
-          height,
-          border,
-          top: `${topOffset - index * 2.2}%`,
-          left: `${leftOffset - index * 2.5}%`,
-        }}
-      />
-    );
-  });
 }
